@@ -1,10 +1,13 @@
 <!DOCTYPE html>
+
 <html>
 	<head>
 		<title>
 		weather-web-page
 		</title>
-		
+
+		<link rel="stylesheet" href="style.css">
+
 
 		<style type='text/css'>
 			body
@@ -62,7 +65,7 @@
 	<body id='page_body'>
 		<br>
 		<br>
-		<form action="main.php" method="post">
+		<form action="" method="post">
 			<h1 id='hd1'><label for="location">Check your weather!</label></h1>
 
 			<div id='div1'>
@@ -72,18 +75,61 @@
 				<!the background image will get changed according to the value of 
 				variable -->
 				
-				<button type="submit" name="sub">View</button>
+				<button type="submit" name="sub" >View</button>
 			</div>
 		</form>
+		<br>
+		<br>
+		<br>
+		<div class="card" id="card">
+			<div class="container">
+			<?php
+				error_reporting(E_ERROR | E_PARSE);
+				if ($_POST["city"])
+				{
 
-		<script type='text/javascript' >
-			function func_change_bg_img(x)
-			{
-					/*document.body.background-image=url("sunny.jpg");*/
-				document.getElementById('page_body').className="bg"+x;
+					$city = $_POST['city'];
 
-			}
-		</script>
+					// $country = $_POST['cc'];
+
+					$url="http://api.openweathermap.org/data/2.5/weather?q=".$city."&units=metric&cnt=7&lang=en&appid=9d170c1ab1e342e5efb1f239653057de";
+
+
+					$json=file_get_contents($url);
+					if ($json)
+					{
+						$data=json_decode($json,true);
+
+						echo "<h2>Current Temperature in " . $city . " is :<button class='btn btn-success'>" . $data['main']['temp'] . "&#176; Celcius</button></h2>";
+
+						echo "<h2>Wind Speed is :<u>" . $data['wind']['speed'] . "</u> KMPH</h2>";
+
+						echo "<h2>Humidity is :<u>" . $data['main']['humidity'] . "</u> %</h2>";
+
+						
+
+						echo  "<h2>Weather condition:<u>" . $data['weather'][0]['main']  . "</u>";
+
+						
+
+						echo "<img src='http://openweathermap.org/img/w/" .$data['weather'][0]['icon']. ".png' width='90' height='90'></h2>";
+					}
+					else
+					{
+						echo "<h2>This city is not in our database !</h3>";
+					}
+
+					
+				}
+				else
+				{
+
+					echo "Please Enter City Name";
+				}
+				
+			?>
+			</div>
+		</div>
 	</body>
 
 </html>
