@@ -13,7 +13,7 @@
 				background-repeat: no-repeat;
   				background-size: cover;
 			}
-			#tx1 
+			#location
 			{
 				font-size : 20px;
 				border-radius : 4px;
@@ -63,10 +63,13 @@
 		<br>
 		<br>
 		<p>
-			<h1 id='hd1'>Check your weather!</h1>
+			<form action="/location/" method="post">
+			<h1 id='hd1'>
+				<label for="location">Check your weather!
+				</label></h1>
 
 		<div id='div1'>
-			<input type='text' id='tx1' placeholder="location">
+			<input type='text' id='location' placeholder="location" value="location">
 			
 			<!change the '1' below to some variable which denotes the tye of weather at the location>
 			<!the background image will get changed according to the value of variable>
@@ -74,7 +77,7 @@
 			<button id='bt1' onclick=func_change_bg_img(1)>Enter</button>
 		</div>
 		
-
+	</form>
 
 		<script type='text/javascript' >
 			function func_change_bg_img(x)
